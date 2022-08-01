@@ -1,8 +1,8 @@
 export default async function exit(_, res) {
-  // Exit the current user from "Preview Mode". This function accepts no args.
-  res.clearPreviewData()
+  // 現在のユーザーを「プレビュー モード」から終了します。 この関数は引数を受け入れません。
+  res.clearPreviewData();
 
-  // Redirect the user back to the index page.
-  res.writeHead(307, { Location: '/' })
-  res.end()
+  // ユーザーをインデックス ページにリダイレクトします。
+  res.writeHead(307, { Location: "/" });
+  res.end();
 }

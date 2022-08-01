@@ -12,6 +12,7 @@ module.exports = {
       "2.gravatar.com",
       "secure.gravatar.com",
       "1.gravatar.com",
+      "web-labo-link.local",
     ],
   },
 };
