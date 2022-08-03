@@ -3,13 +3,16 @@ const API_URL = process.env.WORDPRESS_API_URL;
 async function fetchAPI(query = "", { variables } = {}) {
   const headers = { "Content-Type": "application/json" };
 
+  //もしログインに使うトークンが入っていれば？
   if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
+    //Bearerのエンドポイントを叩く？
     headers[
       "Authorization"
     ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
 
   // WPGraphQL プラグインを有効にする必要があります
+  // APIURLのエンドポイントをPOSTで叩いてJavaScript のオブジェクトや値を JSON 文字列に変換して渡す？
   const res = await fetch(API_URL, {
     headers,
     method: "POST",
@@ -19,6 +22,7 @@ async function fetchAPI(query = "", { variables } = {}) {
     }),
   });
 
+  //レスポンスのjsonを解析しエラーじゃなかったらデータを返す？
   const json = await res.json();
   if (json.errors) {
     console.error(json.errors);
@@ -27,6 +31,7 @@ async function fetchAPI(query = "", { variables } = {}) {
   return json.data;
 }
 
+//指定の投稿のID､スラッグ､公開状態を取得？
 export async function getPreviewPost(id, idType = "DATABASE_ID") {
   const data = await fetchAPI(
     `
@@ -44,6 +49,7 @@ export async function getPreviewPost(id, idType = "DATABASE_ID") {
   return data.post;
 }
 
+//全ての投稿のスラッグを取得？
 export async function getAllPostsWithSlug() {
   const data = await fetchAPI(`
     {
@@ -59,6 +65,7 @@ export async function getAllPostsWithSlug() {
   return data?.posts;
 }
 
+//ホームに表示する投稿の内容所得？
 export async function getAllPostsForHome(preview) {
   const data = await fetchAPI(
     `
